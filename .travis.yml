@@ -8,3 +8,4 @@ env:
     - secure: "TXR+coGR4KrmdXTiJ6+npxa+GLYMVn7qvxZoFU9nOvuFKMIUyuo5O/MZpesqwRqeNcT3OeIZPGAk5FmnIdFE0J/MFn9RDTb9N0u1s/rpgBeVT1gLyJhAA0Rww0gSs47B86LIobqvBKCph90+YWDU6H9Z+f718JA+zjc4Krogit0="
 after_success:
    "curl -T target/uploadfilename -u $SCP_USER:$SCP_PASSWORD sftp://${SCP_URL}/var/www/6e41d720bb"
+   
