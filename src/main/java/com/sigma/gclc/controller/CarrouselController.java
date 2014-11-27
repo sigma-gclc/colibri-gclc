@@ -33,4 +33,7 @@ public class CarrouselController {
 		getImages().add(new ImageCarrousel("Deuxieme image", 2));
 		return getImages();
 	}
+	
+	
+	
 }
