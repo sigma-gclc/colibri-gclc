@@ -7,3 +7,26 @@ body{
 .glc-navbar a{
     color: #000;
 }
+.slick-prev:before, .slick-next:before {
+font-family: "slick";
+font-size: 20px;
+line-height: 1;
+color: black;
+opacity: 0.75;
+
+-webkit-font-smoothing: antialiased;
+}
+.slick-img-div {
+	text-align :center;
+	
+}
+.currentCaption {
+	text-align:center;
+}
+
+.imgSlide {
+	margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width:300px;
+}
