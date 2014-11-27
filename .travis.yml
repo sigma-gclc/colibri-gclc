@@ -7,5 +7,5 @@ env:
     - secure: "J7Ta8KLZxSsF1x18EzYzwofo61AuZ+BZ+mN1p5EWlvHRTDJh8f9awzDzNu0wiZGksetp2phZ/083usXocKfYerbJa6jQuwR+fnQLMHOKui1BpBnl06lFKpPwhH2xLnlbHWymzp1gTZPYsH3Zre+3fT5P5IipMfNwkKrgLPoWmsA="
     - secure: "TXR+coGR4KrmdXTiJ6+npxa+GLYMVn7qvxZoFU9nOvuFKMIUyuo5O/MZpesqwRqeNcT3OeIZPGAk5FmnIdFE0J/MFn9RDTb9N0u1s/rpgBeVT1gLyJhAA0Rww0gSs47B86LIobqvBKCph90+YWDU6H9Z+f718JA+zjc4Krogit0="
 after_success:
-   "curl -T target/uploadfilename -u $SCP_USER:$SCP_PASSWORD sftp://${SCP_URL}/var/www/6e41d720bb"
+   "curl -T target/team53-carroussel.jar -u $SCP_USER:$SCP_PASSWORD sftp://${SCP_URL}/var/www/6e41d720bb"
    
