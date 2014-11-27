@@ -2,6 +2,7 @@ package com.sigma.gclc.service;
 
 
 import java.io.File;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,13 +31,15 @@ public class ServiceImage {
 			return new ArrayList<ImageCarrousel>(0);
 		}
 		
+		//Paths.get(imageDirectory.toURI()).;
+		
 		File[] fichiers = imageDirectory.listFiles();
 		int nombreImages = fichiers.length;
 		logger.warn(" Nombre d'images trouvés : '{}' ", nombreImages);
 		
 		List<ImageCarrousel> images = new ArrayList<ImageCarrousel>(nombreImages);
 		for (int i=0; i<nombreImages; i++ ) {
-			ImageCarrousel image = new ImageCarrousel(fichiers[i].getName());
+			ImageCarrousel image = new ImageCarrousel(MessageFormat.format("images/{0}", fichiers[i].getName()));
 			images.add(image);
 		} 
 	
