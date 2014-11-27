@@ -47,35 +47,12 @@
 	</div>
 	<div class="container">
 		<div class="row">
-			<div id="slideshow">
+			<div id="slideshow" th:unless="${#lists.isEmpty(imagesListe)}">
 				<div class="GCLC-class">
-					<div class="slick-img-div">
-						<img alt="bach_creek_river" src="images/bach_creek_river.jpg" class="imgSlide"/><br/>
-						<label id="lblCurrentCaption">bach_creek_river</label>
-					</div>
-					<div class="slick-img-div">
-						<img alt="canoe_water_nature" src="images/canoe_water_nature.jpg"
-							width="300" class="imgSlide"/>
-							<br/>
-							<label id="lblCurrentCaption">canoe_water_nature</label>
-					</div>
-					<div class="slick-img-div">
-						<img alt="guyana_sky_clouds" src="images/guyana_sky_clouds.jpg"
-							width="300" class="imgSlide"/>
-							<br/>
-							<label id="lblCurrentCaption">guyana_sky_clouds</label>
-					</div>
-					<div class="slick-img-div">
-						<img alt="hawaii_sky_clouds" src="images/hawaii_sky_clouds.jpg"
-							width="300" class="imgSlide"/>
-							<br/>
-							<label id="lblCurrentCaption">hawaii_sky_clouds</label>
-					</div>
-					<div class="slick-img-div">
-						<img alt="water_nature_river" src="images/water_nature_river.jpg"
-							width="300" class="imgSlide"/>
-							<br/>
-							<label id="lblCurrentCaption">water_nature_river</label>
+					<div class="slick-img-div" th:each="img:${imagesListe}">
+						<img class="imgSlide" th:src="${{img.nom}}" th:alt="${{img.description}}"/>
+						<br/>
+						<label class="lblCurrentCaption" th:text="${{img.description}}"></label>
 					</div>
 				</div>
 			</div>

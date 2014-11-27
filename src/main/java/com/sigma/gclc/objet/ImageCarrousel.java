@@ -6,7 +6,10 @@ public class ImageCarrousel {
 	private int id;
 	private String description;
 	
-	
+	public ImageCarrousel(String nom) {
+		super();
+		this.nom = nom;
+	}
 	
 	public ImageCarrousel(String nom, int id) {
 		super();
