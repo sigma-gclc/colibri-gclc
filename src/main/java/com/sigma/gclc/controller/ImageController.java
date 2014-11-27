@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(value="/images")
+//@RequestMapping(value="/images")
 public class ImageController {
 
 	private File imageDirectory;
@@ -35,7 +35,7 @@ public class ImageController {
 		this.imageCachePeriod= cachePeriod;
 	}
 	
-	@RequestMapping(value="{img}")
+	@RequestMapping(value="/images/{img:.+}")
 	public void loadImage(@PathVariable("img")String img, HttpServletResponse response) throws Exception {
 		if (StringUtils.isEmpty(img)) {
 			response.sendError(404);
