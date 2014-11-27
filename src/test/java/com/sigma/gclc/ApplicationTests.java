@@ -11,7 +11,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +31,6 @@ import com.sigma.gclc.service.ServiceImage;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
-// @ContextConfiguration(loader=SpringApplicationContextLoader.class,
-// initializers=StaticMockPropertyInitializer.class)
 public class ApplicationTests {
 
 	static class StaticMockPropertyInitializer implements
@@ -74,12 +71,11 @@ public class ApplicationTests {
 	}
 	
 	@Test
-	@Ignore
 	public void test_listerImages() throws Exception {
 		List<ImageCarrousel> images = serviceImage.listerImagesRepertoire();
 		
 		assertEquals("Nombre d'image incorrect", 1, images.size());
-		assertEquals("Nombre d'image incorrect", "couchbase-circle-symbol.png", images.get(0).getNom());
+		assertEquals("images/couchbase-circle-symbol.png", images.get(0).getNom());
 		assertTrue(StringUtils.isNotBlank(images.get(0).getDescription()));
 	}
 	
