@@ -22,10 +22,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mobile.device.Device;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.accept.MediaTypeFileExtensionResolver;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -57,17 +57,19 @@ public class ImageController {
 	}
 
 	@RequestMapping(value = "{img:.+}")
-	public ResponseEntity<byte[]> loadImage(
-			@PathVariable("img") String img,
-			@RequestHeader(value = "User-Agent", required = false) String userAgent)
-			throws Exception {
+	public ResponseEntity<byte[]> loadImage(@PathVariable("img") String img,
+			Device device) throws Exception {
 		if (StringUtils.isBlank(img)) {
 			return new ResponseEntity<byte[]>(
 					"Nom de l'image non spécifié".getBytes("UTF-8"),
 					HttpStatus.BAD_REQUEST);
 		}
 
-		File imgFile = new File(imageDirectory, img);
+		File imgFile = new File(desktopImageDirectory, img);
+
+		if (device.isMobile()) {
+			imgFile = new File(mobileImageDirectory, img);
+		}
 		if (!imgFile.exists()) {
 			logger.warn(" Fichier '{}' non trouvé", imgFile);
 			return new ResponseEntity<byte[]>(format("Immage {0} non trouvé",
