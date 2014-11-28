@@ -61,6 +61,7 @@ public class ImageController {
 		File imgFile = new File(desktopImageDirectory, img);
 
 		if (device.isMobile()) {
+			logger.info("Device mobile:", device);
 			imgFile = new File(mobileImageDirectory, img);
 		}
 		if (!imgFile.exists()) {
