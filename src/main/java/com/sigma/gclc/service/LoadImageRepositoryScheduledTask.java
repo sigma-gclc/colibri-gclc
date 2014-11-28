@@ -58,7 +58,7 @@ public class LoadImageRepositoryScheduledTask {
 			if (!"prop".equals(FilenameUtils.getExtension(aFile.getName()))) {
 				// c'est une image !
 				if (aFile.length() > imageMaxSize) {
-					logger.info("Image {} de taill {} (en octets) non conservée", aFile, aFile.length());
+					logger.info("Image {} de taille {} (en octets) non conservée", aFile, aFile.length());
 					continue; // image non conservée => too big
 				}
 				ImageCarrousel image = new ImageCarrousel(MessageFormat.format(
