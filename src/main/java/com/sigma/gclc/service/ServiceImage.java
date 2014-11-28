@@ -3,18 +3,11 @@ package com.sigma.gclc.service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +21,7 @@ public class ServiceImage {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	private File imageDirectory;
-	
+
 	@Value("${imageMaxLength:1000000}")
 	private long maxLength;
 
@@ -43,7 +36,7 @@ public class ServiceImage {
 			logger.warn(" Repertoire '{}' non trouvé", imageDirectory);
 			return new ArrayList<ImageCarrousel>(0);
 		}
-		
+
 		File[] fichiers = imageDirectory.listFiles();
 		int nombreImages = fichiers.length;
 		logger.info(" Nombre d'images trouvés : '{}' ", nombreImages);
@@ -60,7 +53,8 @@ public class ServiceImage {
 				ImageCarrousel image = new ImageCarrousel(MessageFormat.format(
 						"images/{0}", fichiers[i].getName()));
 				// pour la description => load le fichier property correspondant
-				File descriptionFile = new File(imageDirectory, FilenameUtils.getBaseName(aFile.getName())+".prop");
+				File descriptionFile = new File(imageDirectory,
+						FilenameUtils.getBaseName(aFile.getName()) + ".prop");
 				if (descriptionFile.exists()) {
 					Properties props = new Properties();
 					props.load(new FileInputStream(descriptionFile));
@@ -68,7 +62,7 @@ public class ServiceImage {
 				}
 				images.add(image);
 			}
-			
+
 		}
 
 		return images;
