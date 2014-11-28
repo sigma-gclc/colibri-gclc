@@ -32,8 +32,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/images")
 public class ImageController {
 
-	private File imageDirectory;
-
 	@Value("${mobileImageDirectory}")
 	private File mobileImageDirectory;
 
@@ -45,11 +43,6 @@ public class ImageController {
 
 	@Autowired
 	private MediaTypeFileExtensionResolver mediaTypeFileExtensionResolver;
-
-	@Value("${imagesDirectory}")
-	public void setImagesDirectory(File directory) {
-		this.imageDirectory = directory;
-	}
 
 	@Value("${image.cachePeriod:36000}")
 	public void setImageCachePeriod(int cachePeriod) {

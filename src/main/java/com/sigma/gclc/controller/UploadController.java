@@ -56,7 +56,7 @@ public class UploadController {
 		
 		if (file.isEmpty()) {
 			logger.info("Fichier {} vide", name);
-			throw new IllegalArgumentException(MessageFormat.format("Fichier {} est vide", name));
+			throw new IllegalArgumentException(MessageFormat.format("Fichier {0} est vide", name));
 		}
 		
 		if (!uploadImagesDirectory.exists() && !uploadImagesDirectory.mkdirs()) {
