@@ -2,12 +2,8 @@ package com.sigma.gclc.controller;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.InputStreamReader;
 import java.text.MessageFormat;
 
 import javax.annotation.PostConstruct;
@@ -42,7 +38,8 @@ public class UploadController {
 	public void postInit() {
 		if (!uploadImagesDirectory.exists()) {
 			if (!uploadImagesDirectory.mkdirs()) {
-				throw new IllegalArgumentException(MessageFormat.format("Impossible de créer le répertoire {0}", uploadImagesDirectory));
+				logger.warn(MessageFormat.format("Impossible de créer le répertoire {0}", uploadImagesDirectory));
+				//throw new IllegalArgumentException();
 			}
 		}
 	}
@@ -60,6 +57,10 @@ public class UploadController {
 		if (file.isEmpty()) {
 			logger.info("Fichier {} vide", name);
 			throw new IllegalArgumentException(MessageFormat.format("Fichier {} est vide", name));
+		}
+		
+		if (!uploadImagesDirectory.exists() && !uploadImagesDirectory.mkdirs()) {
+			throw new IllegalArgumentException(MessageFormat.format("Impossible de créer le répertoire {0}", uploadImagesDirectory));
 		}
 		
 		File uploadedFile = new File(uploadImagesDirectory, name);
