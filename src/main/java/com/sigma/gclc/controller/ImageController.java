@@ -22,19 +22,27 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mobile.device.Device;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.accept.MediaTypeFileExtensionResolver;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(value="/images")
+@RequestMapping(value = "/images")
 public class ImageController {
 
 	private File imageDirectory;
+
+	@Value("${mobileImageDirectory}")
+	private File mobileImageDirectory;
+
+	@Value("${desktopImageDirectory}")
+	private File desktopImageDirectory;
+
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	int imageCachePeriod;
-	
+
 	@Autowired
 	private MediaTypeFileExtensionResolver mediaTypeFileExtensionResolver;
 
@@ -42,40 +50,51 @@ public class ImageController {
 	public void setImagesDirectory(File directory) {
 		this.imageDirectory = directory;
 	}
+
 	@Value("${image.cachePeriod:36000}")
 	public void setImageCachePeriod(int cachePeriod) {
-		this.imageCachePeriod= cachePeriod;
+		this.imageCachePeriod = cachePeriod;
 	}
-	
-	@RequestMapping(value="{img:.+}")
-	public ResponseEntity<byte[]> loadImage(@PathVariable("img")String img) throws Exception {
+
+	@RequestMapping(value = "{img:.+}")
+	public ResponseEntity<byte[]> loadImage(@PathVariable("img") String img,
+			Device device) throws Exception {
 		if (StringUtils.isBlank(img)) {
-			return new ResponseEntity<byte[]>("Nom de l'image non spécifié".getBytes("UTF-8"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<byte[]>(
+					"Nom de l'image non spécifié".getBytes("UTF-8"),
+					HttpStatus.BAD_REQUEST);
 		}
-		
-		File imgFile = new File(imageDirectory, img);
+
+		File imgFile = new File(desktopImageDirectory, img);
+
+		if (device.isMobile()) {
+			imgFile = new File(mobileImageDirectory, img);
+		}
 		if (!imgFile.exists()) {
 			logger.warn(" Fichier '{}' non trouvé", imgFile);
-			return new ResponseEntity<byte[]>(format("Immage {0} non trouvé", imgFile.getName()).getBytes("UTF-8"), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<byte[]>(format("Immage {0} non trouvé",
+					imgFile.getName()).getBytes("UTF-8"), HttpStatus.NOT_FOUND);
 		}
-		
+
 		HttpHeaders headers = new HttpHeaders();
-		
-		headers.setCacheControl(MessageFormat.format("public, max-age={0}", imageCachePeriod));
+
+		headers.setCacheControl(MessageFormat.format("public, max-age={0}",
+				imageCachePeriod));
 		headers.setContentType(findImageMediaType(imgFile));
 		// alimente la reponse http
-		try (InputStream input = new FileInputStream(imgFile)){
-			
-			return new ResponseEntity<byte[]>(IOUtils.toByteArray(input), headers, HttpStatus.OK);
-		} 
+		try (InputStream input = new FileInputStream(imgFile)) {
+
+			return new ResponseEntity<byte[]>(IOUtils.toByteArray(input),
+					headers, HttpStatus.OK);
+		}
 	}
-	
+
 	MediaType findImageMediaType(File file) {
 		String extension = FilenameUtils.getExtension(file.getName());
 		MediaType mediaType = null;
-		
+
 		switch (extension) {
-		case "png": 
+		case "png":
 			mediaType = IMAGE_PNG;
 			break;
 		case "jpg":
