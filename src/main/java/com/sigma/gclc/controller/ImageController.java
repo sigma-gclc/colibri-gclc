@@ -61,13 +61,12 @@ public class ImageController {
 		
 		HttpHeaders headers = new HttpHeaders();
 		
-		ResponseEntity<byte[]> responseEntity = null;
-		
 		headers.setCacheControl(MessageFormat.format("public, max-age={0}", imageCachePeriod));
 		headers.setContentType(findImageMediaType(imgFile));
-		
+		// alimente la reponse http
 		try (InputStream input = new FileInputStream(imgFile)){
-			return new ResponseEntity(IOUtils.toByteArray(input), headers, HttpStatus.OK);
+			
+			return new ResponseEntity<byte[]>(IOUtils.toByteArray(input), headers, HttpStatus.OK);
 		} 
 	}
 	
